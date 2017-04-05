@@ -12,7 +12,7 @@ package nz.ac.aut.ense701.gameModel;
 public class Fauna extends Occupant
 {
     /*
-    This comment is to test gitHub
+    This is the Branch
     */
 
     /**
