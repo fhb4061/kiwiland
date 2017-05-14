@@ -1,5 +1,4 @@
 package nz.ac.aut.ense701.gui;
-
 import java.awt.Component;
 import java.awt.GridLayout;
 import javax.swing.JOptionPane;
@@ -15,9 +14,7 @@ import nz.ac.aut.ense701.gameModel.MoveDirection;
  * @version July 2011
  */
 
-public class KiwiCountUI 
-    extends javax.swing.JFrame 
-    implements GameEventListener
+public class KiwiCountUI extends javax.swing.JFrame implements GameEventListener
 {
 
     /**
@@ -177,7 +174,7 @@ public class KiwiCountUI
         pnlIsland.setLayout(pnlIslandLayout);
         pnlIslandLayout.setHorizontalGroup(
             pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGap(0, 459, Short.MAX_VALUE)
         );
         pnlIslandLayout.setVerticalGroup(
             pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
