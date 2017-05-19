@@ -1,10 +1,12 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
-import javax.swing.ImageIcon;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.MoveDirection;
 import nz.ac.aut.ense701.gameModel.Terrain;
 
 /*
@@ -14,7 +16,7 @@ import nz.ac.aut.ense701.gameModel.Terrain;
  * @version 1.0 - created
  */
 
-public class GridSquarePanel extends javax.swing.JPanel 
+public class GridSquarePanel extends javax.swing.JPanel implements KeyListener
 {
     /** 
      * Creates new GridSquarePanel.
@@ -28,6 +30,27 @@ public class GridSquarePanel extends javax.swing.JPanel
         this.row    = row;
         this.column = column;
         initComponents();
+	addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch(e.getKeyCode()) {
+        case KeyEvent.VK_RIGHT:
+            game.playerMove(MoveDirection.EAST);
+            break;
+        case KeyEvent.VK_LEFT:
+            game.playerMove(MoveDirection.WEST);
+            break;
+        case KeyEvent.VK_UP:
+            game.playerMove(MoveDirection.NORTH);
+            break;
+        case KeyEvent.VK_DOWN:
+            game.playerMove(MoveDirection.SOUTH);
+            break;
+        }
     }
 
     /**
@@ -44,61 +67,34 @@ public class GridSquarePanel extends javax.swing.JPanel
         
         switch ( terrain )
         {
-            case SAND     : lblText.setIcon(new ImageIcon("src/images/sand.png"));        break;
-            case FOREST   : lblText.setIcon(new ImageIcon("src/images/forest.png"));     break;
-            case WETLAND  : lblText.setIcon(new ImageIcon("src/images/wetland.png"));           break;
-            case SCRUB    : lblText.setIcon(new ImageIcon("src/images/scrub.jpg"));      break;
-            case WATER    : lblText.setIcon(new ImageIcon("src/images/water.jpg"));           break;
-            default       : color = Color.LIGHT_GRAY;    break;
-            
-            
-            
-            //case SAND     : color = Color.YELLOW;        break;
-            //case FOREST   : color = Color.GREEN;         break;
-            //case WETLAND  : color = Color.BLUE;          break;
-            //case SCRUB    : color = Color.DARK_GRAY;     break;
-            //case WATER    : color = Color.CYAN;          break;
-            //default       : color = Color.LIGHT_GRAY;    break;
- 
+            case SAND     : color = Color.YELLOW; break;
+            case FOREST   : color = Color.GREEN;  break;
+            case WETLAND : color = Color.BLUE; break;
+            case SCRUB : color = Color.DARK_GRAY;   break;
+            case WATER    : color = Color.CYAN;   break;
+            default  : color = Color.LIGHT_GRAY; break;
         }
         
         if ( squareExplored || squareVisible )
         {
-            // Set the text of the JLabel if there is a Kiwi in a square
-            
+            // Set the text of the JLabel according to the occupant
             lblText.setText(game.getOccupantStringRepresentation(row,column));
-            System.out.println(""+game.getOccupantStringRepresentation(row, column).length());
-            if("K".equals(game.getOccupantStringRepresentation(row, column)) || "PK".equals(game.getOccupantStringRepresentation(row, column))){
-                lblText.setIcon(new ImageIcon("src/images/cute.jpg"));
-                System.out.println("gefds");  
-            }
-                
-            
-            //Switch case
-            // if T
-            //image = ImageIcon("Test.png");
-
-            //lblTxt.setIcon(image)
             // Set the colour. 
             if ( squareVisible && !squareExplored ) 
             {
-               // When explored the colour is brighter
-               // color = new Color(Math.min(255, color.getRed()   + 128), 
-               //                   Math.min(255, color.getGreen() + 128), 
-               //                 Math.min(255, color.getBlue()  + 128));
+                // When explored the colour is brighter
+                color = new Color(Math.min(255, color.getRed()   + 128), 
+                                  Math.min(255, color.getGreen() + 128), 
+                                  Math.min(255, color.getBlue()  + 128));
             }
-            //lblText.setIcon( icon );
+            lblText.setBackground(color);
             // set border colour according to 
             // whether the player is in the grid square or not
             setBorder(game.hasPlayer(row,column) ? activeBorder : normalBorder);
-            lblText.setHorizontalTextPosition(lblText.CENTER);
         }
         else
         {
             lblText.setText("");
-            lblText.setHorizontalTextPosition(lblText.CENTER);
-            lblText.setIcon(null);
-            //lblText.setIcon(new ImageIcon("src/images/default.jpg")); 
             lblText.setBackground(null);
             setBorder(normalBorder);
         }
@@ -133,4 +129,14 @@ public class GridSquarePanel extends javax.swing.JPanel
     
     private static final Border normalBorder = new LineBorder(Color.BLACK, 1);
     private static final Border activeBorder = new LineBorder(Color.RED, 3);
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
