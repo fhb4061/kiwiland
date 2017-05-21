@@ -298,7 +298,6 @@ public class Island
             for ( int col = 0; col < this.numColumns; col++ ) 
             {
                 GridSquare g = islandGrid[row][col];
-                
                 // create string with occupants
                 String cellOccupant = g.hasPlayer() ? "@" : " ";
                 cellOccupant += g.getOccupantStringRepresentation();
